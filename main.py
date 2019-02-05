@@ -27,10 +27,33 @@ app.layout = html.Div(children=[
             options=[
                 {'label': i, 'value': i} for i in df['model']
             ],
-        )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'})
+        )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
+        html.Div([html.Div([], id='graph', style={'float': 'left'})])
 ])
 
-
+# Callback to update the graph based on selected model of automobile
+@app.callback(
+    dash.dependencies.Output('graph', 'children'),
+    [dash.dependencies.Input('car-dropdown', 'value')])
+def callback_a(selected_car):
+    car_df = df[df.model == selected_car]
+    return html.Div([
+            html.Div([dcc.Graph(
+                    id='road-tests-data-visualization',
+                    figure={
+                    'data': [
+                        {'x': ['mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec', 'vs', 'am', 'gear', 'carb'], 
+                        'y': [car_df.iloc[0]['mpg'], car_df.iloc[0]['cyl'], car_df.iloc[0]['disp'], 
+                        car_df.iloc[0]['hp'], car_df.iloc[0]['drat'], car_df.iloc[0]['wt'], 
+                        car_df.iloc[0]['qsec'], car_df.iloc[0]['vs'], car_df.iloc[0]['am'], 
+                        car_df.iloc[0]['gear'], car_df.iloc[0]['carb']], 'type': 'bar', 'name': ''},
+                    ],
+                    'layout': {
+                        'title': 'Data Visualization - ' + selected_car
+                    },
+                }
+            )])
+        ])
 
 
 
