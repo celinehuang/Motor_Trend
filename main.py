@@ -1,7 +1,6 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table
 import pandas as pd
 
 # making a dataframe from the tsv file, start reading data at line 5
@@ -12,6 +11,8 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+markdown_text = '''**The data was extracted from the 1974 *Motor Trend* US magazine, and comprises fuel 
+consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).**'''
 
 app.layout = html.Div(children=[
     html.Div([html.H1( 
@@ -27,8 +28,13 @@ app.layout = html.Div(children=[
             options=[
                 {'label': i, 'value': i} for i in df['model']
             ],
+            value="Mazda RX4"
         )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
-        html.Div([html.Div([], id='graph', style={'float': 'left'})])
+        html.Div([html.Div([], id='graph', style={'float': 'left'})]),
+        html.Div([dcc.Markdown(
+            className='absolute',
+            children=markdown_text
+            )])
 ])
 
 # Callback to update the graph based on selected model of automobile
@@ -50,7 +56,7 @@ def callback_a(selected_car):
                     ],
                     'layout': {
                         'title': 'Data Visualization - ' + selected_car
-                    },
+                    }
                 }
             )])
         ])
