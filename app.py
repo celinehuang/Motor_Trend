@@ -15,10 +15,6 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 markdown_text = '''**The data was extracted from the 1974 *Motor Trend* US magazine, and comprises fuel 
 consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).**'''
 
-colors = {
-    'background': '#bbadef',
-    'text': '#7FDBFF'
-}
 
 app.layout = html.Div(children=[
     html.Div([html.H1( 
@@ -46,6 +42,13 @@ app.layout = html.Div(children=[
             ],
             value="Mazda RX4"
         )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
+        # html.Div([
+        #     html.Label(),
+        #     dcc.RadioItems(
+        #     options=[
+        #         {'label': 'See All Models'}
+        #     ],
+        # )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
         html.Div([html.Div([], id='graph', style={'float': 'left'})]),
         html.Div([dcc.Markdown(
             className='absolute',
@@ -93,7 +96,7 @@ def callback_a(selected_car, selected_compare):
                             car_df.iloc[0]['gear'], car_df.iloc[0]['carb']],
                             name=selected_car,
                             marker=go.bar.Marker(
-                                color='rgb(55, 83, 109)'
+                                color='rgb(196, 152, 255)'
                             )
                         ),
                         go.Bar(
@@ -104,7 +107,7 @@ def callback_a(selected_car, selected_compare):
                             compare_df.iloc[0]['gear'], compare_df.iloc[0]['carb']],
                             name=selected_compare,
                             marker=go.bar.Marker(
-                                color='rgb(26, 118, 255)'
+                                color='rgb(245, 184, 240)'
                             )
                         )
                     ],
@@ -122,35 +125,6 @@ def callback_a(selected_car, selected_compare):
                 )
             ])
         ])
-        
-# id='compare-data-visualization',
-#                         figure={
-#                         'data': [
-#                             {'x': ['mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec', 'vs', 'am', 'gear', 'carb'], 
-#                             'y': [car_df.iloc[0]['mpg'], car_df.iloc[0]['cyl'], car_df.iloc[0]['disp'], 
-#                             car_df.iloc[0]['hp'], car_df.iloc[0]['drat'], car_df.iloc[0]['wt'], 
-#                             car_df.iloc[0]['qsec'], car_df.iloc[0]['vs'], car_df.iloc[0]['am'], 
-#                             car_df.iloc[0]['gear'], car_df.iloc[0]['carb']], 'type': 'bar', 'name': selected_car},
-#                             {'x': ['mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec', 'vs', 'am', 'gear', 'carb'], 
-#                             'y': [compare_df.iloc[0]['mpg'], compare_df.iloc[0]['cyl'], compare_df.iloc[0]['disp'], 
-#                             compare_df.iloc[0]['hp'], compare_df.iloc[0]['drat'], compare_df.iloc[0]['wt'], 
-#                             compare_df.iloc[0]['qsec'], compare_df.iloc[0]['vs'], compare_df.iloc[0]['am'], 
-#                             compare_df.iloc[0]['gear'], compare_df.iloc[0]['carb']], 'type': 'bar', 'name': selected_compare},
-#                         ],
-#                         'layout': {
-#                             'title': 'Comparison Visualization',
-#                             'marker'=dict(
-#                                 color='rgb(158,202,225)',
-#                                 line=dict(
-#                                     color='rgb(8,48,107)',
-#                                     width=1.5,
-#                                 )
-#                             ),
-#                             'opacity'=0.6
-#                         }
-#                     },
-#                     style={'color': '#bbadef'}
-#                 )
 
 
 if __name__ == '__main__':
