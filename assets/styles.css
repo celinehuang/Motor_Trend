@@ -7,7 +7,21 @@
   font-weight: bold;
   width: 100%;
 }
+.app-header2 {
+  height: 60px;
+  line-height: 60px;
+  border-bottom: thin lightgrey solid;
+  color: #92d9ec;
+  font-weight: bold;
+  width: 100%;
+}
 
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 .absolute {
   position: absolute;
   width: 100%;

@@ -11,6 +11,7 @@ df = pd.read_csv('./mtcars.tsv', delimiter='\t', encoding='utf-8', header=3)
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
 app.config.suppress_callback_exceptions = True
 
 
@@ -44,7 +45,10 @@ def generate_table(dataframe, max_rows=100):
 
 
 view_all_layout = html.Div(children=[
-    html.H4(children='Automobile Design and Performance'),
+    html.H4(
+        className='app-header2',
+        id="title",
+        children='Automobile Design and Performance'),
     generate_table(df),
     html.Div(id='page-1-content'),
     html.Br(),
@@ -59,8 +63,8 @@ compare_models_layout = html.Div(children=[
         id="title",
         children='Motor Trend 1974'),
     ]),
+    html.Div([html.H6(children='Select Models to Compare')]),
     html.Div([
-        html.Label('Automobile Models'),
         # Car dropdown
         dcc.Dropdown(
             id='car-dropdown',
@@ -70,7 +74,6 @@ compare_models_layout = html.Div(children=[
             value="Mazda RX4"
         )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
     html.Div([
-        html.Label('Compare Models'),
         # Compare dropdown
         dcc.Dropdown(
             id='compare-dropdown',
@@ -79,28 +82,22 @@ compare_models_layout = html.Div(children=[
             ],
             value="Mazda RX4"
         )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
-    # html.Div([
-    #     html.Label(),
-    #     dcc.RadioItems(
-    #     options=[
-    #         {'label': 'See All Models'}
-    #     ],
-    # )], style={'width': '15%', 'float': 'left', 'display': 'inline-block', 'margin': '5px'}),
     html.Div([html.Div([], id='graph', style={'float': 'left'})]),
     html.Div([dcc.Markdown(
         className='absolute',
         children=markdown_text
     )]),
-    html.Div(id='page-2-content'),
-    html.Br(),
-    dcc.Link('View All Automobile Design and Performance', href='/models-design-and-performance'),
-    html.Br(),
-    dcc.Link('Go back to home', href='/')
+    html.Div([
+        html.Div(id='page-2-content'),
+        html.Br(),
+        dcc.Link('View All Automobile Design and Performance', href='/models-design-and-performance'),
+        html.Br(),
+        dcc.Link('Go back to home', href='/')
+    ])
 ])
 
+
 # Callback to update the graph based on selected model of automobile
-
-
 @app.callback(
     dash.dependencies.Output('graph', 'children'),
     [dash.dependencies.Input('car-dropdown', 'value'),
@@ -178,7 +175,7 @@ def callback_a(selected_car, selected_compare):
 def display_page(pathname):
     if pathname == '/models-design-and-performance':
         return view_all_layout
-    elif pathname == '/Compare Automobile Models':
+    elif pathname == '/compare-models':
         return compare_models_layout
     else:
         return index_page
